@@ -2,56 +2,73 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Tile from './Tile'
 import constants from './../constants'
-
 const { c } = constants;
 const { d } = constants;
 
-const createGrid = (width, height, tileArray) => {
-  let gameGrid = [];
-  for (let i=0; i<height; i++) {
-    let gridRow = []
-    for (let j=0; j<width; j++) {
-      let newTile = {
-        x: j,
-        y: i,
-        player: false,
-        enemy: false,
-        walkable: true,
-        spritePath: 'ground',
-        playerDirection: 'down',
-        enemyDirection: 'down'
-      }
-      gridRow.push(newTile);
-      tileArray.push(newTile);
-    }
-    gameGrid.push(gridRow);
-  }
-  return gameGrid;
-}
+
 
 class Game extends React.Component {
   constructor(props){
     super(props)
-  this.state = {
-    gameBoard: [],
-    tileArray: []
+    this.state = {
+      gameBoard: [],
+      allTiles: []
     }
+    this.createGrid = this.createGrid.bind(this);
+  }
+
+  createGrid(width, height){
+    const gameGrid = [];
+    for (let i=0; i<height; i++) {
+      let gridRow = []
+      for (let j=0; j<width; j++) {
+        let newTile = {
+          id: i*20+j,
+          x: j,
+          y: i,
+          player: false,
+          enemy: false,
+          walkable: true,
+          spritePath: 'ground',
+          playerDirection: 'down',
+          enemyDirection: 'down'
+        }
+        gridRow.push(newTile);
+        this.state.allTiles.push(newTile);
+      }
+      gameGrid.push(gridRow);
+    }
+    return gameGrid;
   }
 
   render(){
-    let allTiles = [];
-    this.state.gameBoard = createGrid(d.gridWidth, d.gridHeight, allTiles);
-    this.state.tileArray = allTiles;
+    console.log("I'M RENDERING!")
+    this.state.gameBoard = this.createGrid(d.gridWidth, d.gridHeight);
     console.log(this.state.gameBoard);
-    console.log(this.state.tileArray);
+    console.log(this.state.allTiles);
       return(
         <div className="gameContainer">
-          <h1>THIS IS THE GAME COMPONENT</h1>
-          <div>
+          <div className="gridContainer">
+          {Object.keys(this.state.allTiles).map(tileKey => {
+            let tile = this.state.allTiles[tileKey];
+            return <Tile spritePath={tile.spritePath} key={tile.id} />;
+          })}
 
           </div>
           <style jsx>{`
+          .gameContainer {
+            margin: 0 auto;
+          }
 
+          .gridContainer {
+            margin: 0 auto;
+            border: 5px solid black;
+            width: 720px;
+            height: 720px;
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
+          }
           `}
           </style>
         </div>

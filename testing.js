@@ -23,8 +23,3 @@
 //   }
 //   return allTiles;
 // }
-
-// {Object.keys(this.state.tileArray).map(function(tileKey) {
-//   let tile = this.state.tileArray[tileKey];
-//   return <Tile spritePath={tile.spritePath} />;
-// })}

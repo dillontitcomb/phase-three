@@ -2,19 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Tile(props){
-  const renderTile =
-    <div className="tile">
-      <p>{props.spritePath}</p>
-    </div>;
 
   return (
     <div>
-      {renderTile}
+      <div className="tile">
+      </div>
       <style jsx>{`
 			.tile {
-        background-color: "red";
-        min-width: 50px;
-        min-height: 50px;
+        background-color: red;
+        width: 36px;
+        height: 36px;
+        margin: 0;
       }
 			`}</style>
     </div>
