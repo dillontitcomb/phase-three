@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Footer from './Footer'
 import Navbar from './Navbar'
 import LandingPage from './LandingPage'
+import Game from './Game'
 class App extends React.Component {
 
   constructor(props){
@@ -17,6 +18,7 @@ class App extends React.Component {
         <Navbar/>
         <Switch>
           <Route exact path='/' component={LandingPage} />
+          <Route exact path='/play' component={Game} />
         </Switch>
         <Footer/>
       </div>
