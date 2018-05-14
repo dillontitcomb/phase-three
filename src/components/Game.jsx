@@ -5,8 +5,6 @@ import constants from './../constants'
 const { c } = constants;
 const { d } = constants;
 
-
-
 class Game extends React.Component {
   constructor(props){
     super(props)
@@ -67,7 +65,7 @@ class Game extends React.Component {
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
-            return <Tile spritePath={tile.spritePath} id={tile.id} key={tile.id} />;
+            return <Tile spritePath={tile.spritePath} key={tile.id} />;
           })}
 
           </div>

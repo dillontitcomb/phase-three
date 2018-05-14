@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 function Tile(props){
 
   return (
-    <div className={props.spritePath} id={props.id}>
-      <div></div>
+    <div className={props.spritePath}>
       <style jsx>{`
 			.ground {
-        width: 20px;
-        height: 20px;
+        width: 36px;
+        height: 36px;
         background-color: red;
       }
 			`}</style>
@@ -18,8 +17,7 @@ function Tile(props){
 }
 
 Tile.propTypes = {
-  spritePath: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
+  spritePath: PropTypes.string.isRequired
 };
 
 export default Tile;
