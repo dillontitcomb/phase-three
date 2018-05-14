@@ -12,7 +12,8 @@ class Game extends React.Component {
     super(props)
     this.state = {
       gameBoard: [],
-      allTiles: []
+      allTiles: [],
+      playerTile: {}
     }
     this.createGrid = this.createGrid.bind(this);
   }
@@ -38,20 +39,35 @@ class Game extends React.Component {
       }
       gameGrid.push(gridRow);
     }
+    this.state.allTiles[0].player = true;
     return gameGrid;
   }
 
+  // renderGridSprites(){
+  //   for (let i=0; i<this.state.allTiles.length; i++) {
+  //     switch(this.state.allTiles[i].spritePath) {
+  //       case 'ground':
+  //         this.state.allTiles[i].spriteStyles = {
+  //           background-color: 'blue'
+  //         }
+  //       default:
+  //         this.state.allTiles[i].spriteStyles = {
+  //           background-color: 'white'
+  //       }
+  //     }
+  //   }
+  // }
+
   render(){
-    console.log("I'M RENDERING!")
     this.state.gameBoard = this.createGrid(d.gridWidth, d.gridHeight);
-    console.log(this.state.gameBoard);
-    console.log(this.state.allTiles);
+    // renderGridSprites();
+    console.log(this.state.allTiles[0]);
       return(
         <div className="gameContainer">
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
-            return <Tile spritePath={tile.spritePath} key={tile.id} />;
+            return <Tile spritePath={tile.spritePath} id={tile.id} key={tile.id} />;
           })}
 
           </div>
