@@ -14,8 +14,10 @@ function Tile(props){
     <div className={newClassName}>
       <style jsx>{`
       div {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
+        margin: 0px;
+        padding: 0px;
       }
       .ground {
         background-color: red;

@@ -28,7 +28,7 @@ class Game extends React.Component {
         let gridRow = []
         for (let j=0; j<width; j++) {
           let newTile = {
-            id: i*20+j,
+            id: i*width+j,
             x: j,
             y: i,
             player: false,
@@ -51,6 +51,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.state);
 
 //Get 1d array position from tile
     const getOneDimensionalArrayPosition = function(currentTile, gridWidth){
@@ -94,6 +95,7 @@ class Game extends React.Component {
 
 //Move player on keypress
     window.onkeydown = function(event){
+      event.preventDefault();
       console.log(event.key)
       switch(event.key) {
         case 'ArrowUp':
@@ -127,17 +129,19 @@ class Game extends React.Component {
           </div>
           <style jsx>{`
           .gameContainer {
+            width: 1300px;
+            height: 740px;
             margin: 0 auto;
           }
 
           .gridContainer {
             margin: 0 auto;
-            border: 5px solid black;
-            width: 720px;
+            border: 0px solid black;
+            width: 1280px;
             height: 720px;
             display: grid;
-            grid-template-columns: repeat(20, 1fr);
-            grid-template-rows: repeat(20, 1fr);
+            grid-template-columns: repeat(32, 1fr);
+            grid-template-rows: repeat(18, 1fr);
           }
           `}
           </style>
