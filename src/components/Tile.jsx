@@ -28,4 +28,11 @@ Tile.propTypes = {
   spritePath: PropTypes.string.isRequired
 };
 
+const mapStateToProps = state => {
+  return {
+    spritePath: state.user['email'],
+    currentUserName: state.user['name']
+  }
+}
+
 export default Tile;

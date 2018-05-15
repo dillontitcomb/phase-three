@@ -49,9 +49,13 @@ class Game extends React.Component {
 
   componentDidMount() {
     window.onkeydown = (event) => {
-      console.log(this.state);
+      console.log(this.state.gameBoard[5][5].spritePath);
+      console.log("event");
       if (event.key === "ArrowRight") {
-        // this.state.gameBoard[5][5].spritePath = 'wall';
+        console.log("right");
+        this.state.gameBoard[5][5].spritePath = 'wall';
+        console.log(this.state.gameBoard[5][5].spritePath);
+        console.log(this.state.gameBoard[5][5])
         // console.log("arrowRight!")
         // let playerX = this.state.playerTile.x;
         // let playerY = this.state.playerTile.y;
