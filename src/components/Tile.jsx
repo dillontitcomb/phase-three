@@ -12,7 +12,6 @@ function Tile(props){
   }
   return (
     <div className={newClassName}>
-      <p>x:{props.tileObj.x} y:{props.tileObj.y}</p>
       <style jsx>{`
       div {
         width: 36px;

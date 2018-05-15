@@ -20,7 +20,7 @@ class Game extends React.Component {
   componentWillMount() {
     let gameGrid;
     let tiles;
-    let playerTile;
+    let player;
     const createGrid = (width, height) => {
       gameGrid = [];
       tiles = [];
@@ -42,63 +42,74 @@ class Game extends React.Component {
           tiles.push(newTile);
         }
         gameGrid.push(gridRow);
+        gameGrid[0][0].player = true;
+        player = gameGrid[0][0];
       }
-      tiles[7].spritePath = 'wall';
     }
-
     createGrid(d.gridWidth, d.gridHeight);
-    this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: tiles[0]})
+    this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: player})
   }
 
   componentDidMount() {
+
 //Get 1d array position from tile
-    const getOneDimensionalArrayPosition = (currentTile, gridWidth) => {
+    const getOneDimensionalArrayPosition = function(currentTile, gridWidth){
       let output = ((currentTile.y * gridWidth) + currentTile.x);
       return output;
     }
 //Get tile adjacent to current tile by direction
     const findTileFromCurrentTile = (direction, currentTile) => {
+      let newTile;
       switch(direction) {
         case 'up':
-          console.log("up!");
-          return this.state.gameBoard[currentTile.y+1][currentTile.x]
+          newTile = this.state.gameBoard[currentTile.y-1][currentTile.x];
+          return newTile;
         case 'right':
-          return this.state.gameBoard[currentTile.y][currentTile.x+1]
+          newTile = this.state.gameBoard[currentTile.y][currentTile.x+1];
+          return newTile;
         case 'down':
-          return this.state.gameBoard[currentTile.y-1][currentTile.x]
+          newTile = this.state.gameBoard[currentTile.y+1][currentTile.x];
+          return newTile;
         case 'left':
-          return this.state.gameBoard[currentTile.y][currentTile.x-1]
+          newTile = this.state.gameBoard[currentTile.y][currentTile.x-1];
+          return newTile;
+        default:
+          //Do nothing
       }
     }
+//Move player to adjacent tile
+    const movePlayerOneTile = (direction) => {
+      let newTile = Object.assign({}, this.state.playerTile);
+      newTile.player = false;
+      let adjacentTile = Object.assign({}, findTileFromCurrentTile(direction, newTile));
+      adjacentTile.player = true;
+      let new2dArray = Object.assign({}, this.state.gameBoard);
+      let new1dArray = Object.assign({}, this.state.allTiles);
+      new2dArray[newTile.y][newTile.x] = newTile;
+      new2dArray[adjacentTile.y][adjacentTile.x] = adjacentTile;
+      new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
+      new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
+      this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: adjacentTile})
+    }
+
 //Move player on keypress
-    window.onkeydown = (event) => {
-      if (event.key === "ArrowRight") {
-        let newTile = Object.assign({}, this.state.playerTile);
-        newTile.player = false;
-        console.log("does newTile player = true?");
-        console.log(newTile.player);
-        let tileToRight = findTileFromCurrentTile('right', newTile);
-        tileToRight.player = true;
-        // console.log("Current tile and tile to right:");
-        // console.log(newTile);
-        // console.log(tileToRight);
-        let new2dArray = Object.assign({}, this.state.gameBoard);
-        let new1dArray = Object.assign({}, this.state.allTiles);
-        new2dArray[newTile.y][newTile.x] = newTile;
-        new2dArray[tileToRight.y][tileToRight.x] = tileToRight;
-        console.log(newTile.id);
-        console.log(tileToRight.id);
-        console.log("old 1d tile positions: 0 and 1")
-        console.log("new 1d tile positions")
-        console.log(getOneDimensionalArrayPosition(newTile, d.gridWidth))
-        console.log(getOneDimensionalArrayPosition(tileToRight, d.gridWidth))
-        new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
-        new1dArray[getOneDimensionalArrayPosition(tileToRight, d.gridWidth)] = tileToRight;
-        // console.log("New current tile and new player tile to right:");
-        // console.log(new2dArray[newTile.y][newTile.x])
-        // console.log(new2dArray[tileToRight.y][tileToRight.x]);
-        this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: tileToRight})
-        console.log(this.state);
+    window.onkeydown = function(event){
+      console.log(event.key)
+      switch(event.key) {
+        case 'ArrowUp':
+          movePlayerOneTile('up');
+          break;
+        case 'ArrowRight':
+          movePlayerOneTile('right');
+          break;
+        case 'ArrowDown':
+          movePlayerOneTile('down');
+          break;
+        case 'ArrowLeft':
+          movePlayerOneTile('left');
+          break;
+        default:
+          //do nothing
       }
     }
   }
