@@ -10,12 +10,14 @@ function Tile(props){
         width: 36px;
         height: 36px;
       }
-
       .ground {
         background-color: red;
       }
       .wall {
         background-color: blue;
+      }
+      .player {
+        background-color: black;
       }
 			`}</style>
     </div>

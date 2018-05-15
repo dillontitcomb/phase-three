@@ -13,39 +13,59 @@ class Game extends React.Component {
       allTiles: [],
       playerTile: {}
     }
-
-    this.createGrid = this.createGrid.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
-
-  createGrid(width, height){
-    const gameGrid = [];
-    for (let i=0; i<height; i++) {
-      let gridRow = []
-      for (let j=0; j<width; j++) {
-        let newTile = {
-          id: i*20+j,
-          x: j,
-          y: i,
-          player: false,
-          enemy: false,
-          walkable: true,
-          spritePath: 'ground',
-          playerDirection: 'down',
-          enemyDirection: 'down'
+  componentWillMount() {
+    console.log(this.state);
+    const createGrid = (width, height) => {
+      const gameGrid = [];
+      for (let i=0; i<height; i++) {
+        let gridRow = []
+        for (let j=0; j<width; j++) {
+          let newTile = {
+            id: i*20+j,
+            x: j,
+            y: i,
+            player: false,
+            enemy: false,
+            walkable: true,
+            spritePath: 'ground',
+            playerDirection: 'down',
+            enemyDirection: 'down'
+          }
+          gridRow.push(newTile);
+          this.state.allTiles.push(newTile);
         }
-        gridRow.push(newTile);
-        this.state.allTiles.push(newTile);
+        gameGrid.push(gridRow);
       }
-      gameGrid.push(gridRow);
+      this.state.allTiles[0].player = true;
+      this.state.playerTile = this.state.allTiles[0];
+      return gameGrid;
     }
-    this.state.allTiles[0].player = true;
-    return gameGrid;
+    this.state.gameBoard = createGrid(d.gridWidth, d.gridHeight);
+    this.state.allTiles[1].spritePath = 'wall';
   }
-  
+
+  componentDidMount() {
+    window.onkeydown = (event) => {
+      console.log(this.state);
+      if (event.key === "ArrowRight") {
+        // this.state.gameBoard[5][5].spritePath = 'wall';
+        // console.log("arrowRight!")
+        // let playerX = this.state.playerTile.x;
+        // let playerY = this.state.playerTile.y;
+        // this.state.playerTile = this.state.gameBoard[playerX+1][playerY];
+        // this.state.playerTile.player = true;
+        // this.state.playerTile.spritePath = 'player';
+        // this.state.gameBoard[playerX][playerY].player = false;
+        // this.state.gameBoard[playerX][playerY].spritePath = 'ground';
+        // console.log(this.state.playerTile.x);
+      }
+    }
+  }
+
   render(){
-    this.state.gameBoard = this.createGrid(d.gridWidth, d.gridHeight);
-    console.log(this.state.allTiles[0]);
-    this.state.allTiles[0].spritePath = 'wall';
       return(
         <div className="gameContainer">
           <div className="gridContainer">
