@@ -14,6 +14,7 @@ class Game extends React.Component {
       playerTile: {}
     }
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentWillMount() {
@@ -21,7 +22,6 @@ class Game extends React.Component {
     let tiles;
     let playerTile;
     const createGrid = (width, height) => {
-      console.log("createGrid initiated")
       gameGrid = [];
       tiles = [];
       for (let i=0; i<height; i++) {
@@ -49,6 +49,28 @@ class Game extends React.Component {
     createGrid(d.gridWidth, d.gridHeight);
     this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: tiles[0]})
   }
+
+  componentDidMount() {
+    // const findTileFromCurrentTile(direction, currentTile) {
+    //   switch(direction) {
+    //     case 'up':
+    //     case 'right':
+    //     case 'down':
+    //     case 'left':
+    //   }
+    // }
+
+    window.onkeydown = (event) => {
+      if (event.key === "ArrowRight") {
+        let newTile = Object.assign({player: false}, this.state.playerTile);
+        console.log(newTile);
+
+
+      }
+        console.log(event);
+    }
+  }
+
 
   render(){
       return(
