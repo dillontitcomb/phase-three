@@ -13,39 +13,44 @@ class Game extends React.Component {
       allTiles: [],
       playerTile: {}
     }
-
-    this.createGrid = this.createGrid.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
   }
 
-  createGrid(width, height){
-    const gameGrid = [];
-    for (let i=0; i<height; i++) {
-      let gridRow = []
-      for (let j=0; j<width; j++) {
-        let newTile = {
-          id: i*20+j,
-          x: j,
-          y: i,
-          player: false,
-          enemy: false,
-          walkable: true,
-          spritePath: 'ground',
-          playerDirection: 'down',
-          enemyDirection: 'down'
+  componentWillMount() {
+    let gameGrid;
+    let tiles;
+    let playerTile;
+    const createGrid = (width, height) => {
+      console.log("createGrid initiated")
+      gameGrid = [];
+      tiles = [];
+      for (let i=0; i<height; i++) {
+        let gridRow = []
+        for (let j=0; j<width; j++) {
+          let newTile = {
+            id: i*20+j,
+            x: j,
+            y: i,
+            player: false,
+            enemy: false,
+            walkable: true,
+            spritePath: 'ground',
+            playerDirection: 'down',
+            enemyDirection: 'down'
+          }
+          gridRow.push(newTile);
+          tiles.push(newTile);
         }
-        gridRow.push(newTile);
-        this.state.allTiles.push(newTile);
+        gameGrid.push(gridRow);
       }
-      gameGrid.push(gridRow);
+      tiles[7].spritePath = 'wall';
     }
-    this.state.allTiles[0].player = true;
-    return gameGrid;
+
+    createGrid(d.gridWidth, d.gridHeight);
+    this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: tiles[0]})
   }
-  
+
   render(){
-    this.state.gameBoard = this.createGrid(d.gridWidth, d.gridHeight);
-    console.log(this.state.allTiles[0]);
-    this.state.allTiles[0].spritePath = 'wall';
       return(
         <div className="gameContainer">
           <div className="gridContainer">
