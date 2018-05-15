@@ -51,23 +51,33 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    // const findTileFromCurrentTile(direction, currentTile) {
-    //   switch(direction) {
-    //     case 'up':
-    //     case 'right':
-    //     case 'down':
-    //     case 'left':
-    //   }
-    // }
-
+//Get 1d array position from tile
+    const getOneDimensionalArrayPosition = (currentTile, gridWidth) => {
+      let output = ((currentTile.y * gridWidth) + currentTile.x);
+      return output;
+    }
+//Get tile adjacent to current tile by direction
+    const findTileFromCurrentTile = (direction, currentTile) => {
+      switch(direction) {
+        case 'up':
+          console.log("up!");
+          return this.state.gameBoard[currentTile.y+1][currentTile.x]
+        case 'right':
+          return this.state.gameBoard[currentTile.y][currentTile.x+1]
+        case 'down':
+          return this.state.gameBoard[currentTile.y-1][currentTile.x]
+        case 'left':
+          return this.state.gameBoard[currentTile.y][currentTile.x-1]
+      }
+    }
+//Move player on keypress
     window.onkeydown = (event) => {
       if (event.key === "ArrowRight") {
         let newTile = Object.assign({player: false}, this.state.playerTile);
-        console.log(newTile);
-
-
+        let tileToRight = findTileFromCurrentTile('right', newTile);
+        console.log(getOneDimensionalArrayPosition(newTile, d.gridWidth));
+        console.log(getOneDimensionalArrayPosition(tileToRight, d.gridWidth));
       }
-        console.log(event);
     }
   }
 
