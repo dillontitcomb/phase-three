@@ -75,8 +75,27 @@ class Game extends React.Component {
       if (event.key === "ArrowRight") {
         let newTile = Object.assign({player: false}, this.state.playerTile);
         let tileToRight = findTileFromCurrentTile('right', newTile);
-        console.log(getOneDimensionalArrayPosition(newTile, d.gridWidth));
-        console.log(getOneDimensionalArrayPosition(tileToRight, d.gridWidth));
+        tileToRight.player = true;
+        // console.log("Current tile and tile to right:");
+        // console.log(newTile);
+        // console.log(tileToRight);
+        let new2dArray = Object.assign({}, this.state.gameBoard);
+        let new1dArray = Object.assign({}, this.state.allTiles);
+        new2dArray[newTile.y][newTile.x] = newTile;
+        new2dArray[tileToRight.y][tileToRight.x] = tileToRight;
+        console.log(newTile.id);
+        console.log(tileToRight.id);
+        console.log("old 1d tile positions: 0 and 1")
+        console.log("new 1d tile positions")
+        console.log(getOneDimensionalArrayPosition(newTile, d.gridWidth))
+        console.log(getOneDimensionalArrayPosition(tileToRight, d.gridWidth))
+        new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
+        new1dArray[getOneDimensionalArrayPosition(tileToRight, d.gridWidth)] = tileToRight;
+        // console.log("New current tile and new player tile to right:");
+        // console.log(new2dArray[newTile.y][newTile.x])
+        // console.log(new2dArray[tileToRight.y][tileToRight.x]);
+        this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: tileToRight})
+        console.log(this.state);
       }
     }
   }
@@ -88,7 +107,7 @@ class Game extends React.Component {
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
-            return <Tile spritePath={tile.spritePath} key={tile.id} />;
+            return <Tile spritePath={tile.spritePath} x={tile.x} y={tile.y} id={tile.id} key={tile.id} />;
           })}
 
           </div>
