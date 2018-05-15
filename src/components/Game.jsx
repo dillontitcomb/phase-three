@@ -13,6 +13,7 @@ class Game extends React.Component {
       allTiles: [],
       playerTile: {}
     }
+
     this.createGrid = this.createGrid.bind(this);
   }
 
@@ -40,26 +41,11 @@ class Game extends React.Component {
     this.state.allTiles[0].player = true;
     return gameGrid;
   }
-
-  // renderGridSprites(){
-  //   for (let i=0; i<this.state.allTiles.length; i++) {
-  //     switch(this.state.allTiles[i].spritePath) {
-  //       case 'ground':
-  //         this.state.allTiles[i].spriteStyles = {
-  //           background-color: 'blue'
-  //         }
-  //       default:
-  //         this.state.allTiles[i].spriteStyles = {
-  //           background-color: 'white'
-  //       }
-  //     }
-  //   }
-  // }
-
+  
   render(){
     this.state.gameBoard = this.createGrid(d.gridWidth, d.gridHeight);
-    // renderGridSprites();
     console.log(this.state.allTiles[0]);
+    this.state.allTiles[0].spritePath = 'wall';
       return(
         <div className="gameContainer">
           <div className="gridContainer">

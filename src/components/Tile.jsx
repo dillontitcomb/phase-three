@@ -6,10 +6,16 @@ function Tile(props){
   return (
     <div className={props.spritePath}>
       <style jsx>{`
-			.ground {
+      div {
         width: 36px;
         height: 36px;
+      }
+
+      .ground {
         background-color: red;
+      }
+      .wall {
+        background-color: blue;
       }
 			`}</style>
     </div>
