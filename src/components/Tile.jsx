@@ -5,6 +5,8 @@ function Tile(props){
   let newClassName;
   if (props.tileObj.player === true) {
     newClassName = 'player';
+  } else if (props.tileObj.walkable === false){
+    newClassName = 'obstacle';
   } else if (props.tileObj.spritePath === 'ground') {
     newClassName = 'ground';
   } else if (props.tileObj.spritePath === 'wall') {
@@ -27,6 +29,9 @@ function Tile(props){
       }
       .player {
         background-color: white;
+      }
+      .obstacle {
+        background-color: black;
       }
 			`}</style>
     </div>

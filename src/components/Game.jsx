@@ -9,10 +9,14 @@ class Game extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      currentGameBoard: [],
+      currentAllTiles: [],
       gameBoard: [],
-      layerTwo: [],
-      layerThree: [],
       allTiles: [],
+      layerTwoGrid: [],
+      layerTwoTiles: [],
+      layerThreeGrid: [],
+      layerThreeTiles: [],
       playerTile: {}
     }
     this.componentWillMount = this.componentWillMount.bind(this);
@@ -21,16 +25,23 @@ class Game extends React.Component {
 
   componentWillMount() {
     let gameGrid;
-    let layerTwo;
-    let layerThree;
     let tiles;
     let player;
+    let layerTwoGrid;
+    let layerTwoTiles;
+    let layerThreeGrid;
+    let layerThreeTiles;
     const createGrid = (width, height) => {
-      layerTwo = [];
       gameGrid = [];
       tiles = [];
+      layerTwoGrid = [];
+      layerTwoTiles = [];
+      layerThreeGrid = [];
+      layerThreeTiles = [];
       for (let i=0; i<height; i++) {
         let gridRow = []
+        let layerTwoGridRow = [];
+        let layerThreeGridRow = [];
         for (let j=0; j<width; j++) {
           let newTile = {
             id: i*width+j,
@@ -45,14 +56,28 @@ class Game extends React.Component {
           }
           gridRow.push(newTile);
           tiles.push(newTile);
+          let layerTwoTile = Object.assign({}, newTile);
+          if (layerTwoTile.id % 4 === 0) {
+            layerTwoTile.walkable = false;
+          }
+          layerTwoGridRow.push(layerTwoTile);
+          layerTwoTiles.push(layerTwoTile);
+          let layerThreeTile = Object.assign({}, newTile);
+          if (layerThreeTile.id % 7 === 0) {
+            layerThreeTile.walkable = false;
+          }
+          layerThreeGridRow.push(layerThreeTile);
+          layerThreeTiles.push(layerThreeTile);
         }
         gameGrid.push(gridRow);
+        layerTwoGrid.push(layerTwoGridRow);
+        layerThreeGrid.push(layerThreeGridRow);
         gameGrid[0][0].player = true;
         player = gameGrid[0][0];
       }
     }
     createGrid(d.gridWidth, d.gridHeight);
-    this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: player})
+    this.setState({currentGameBoard: gameGrid, currentAllTiles: tiles, gameBoard: gameGrid, allTiles: tiles, playerTile: player, layerTwoGrid: layerTwoGrid, layerTwoTiles: layerTwoTiles, layerThreeGrid: layerThreeGrid, layerThreeTiles: layerThreeTiles});
   }
 
   componentDidMount() {
@@ -99,16 +124,11 @@ class Game extends React.Component {
     }
 
 //Switch to second grid view
-    const changeGrid = (gridTemplate) => {
-      for (let i=0; i<this.state.gameBoard.length; i++) {
 
-      }
-    }
 
 //Move player on keypress
     window.onkeydown = function(event){
       event.preventDefault();
-      console.log(event.key)
       switch(event.key) {
         case 'ArrowUp':
           movePlayerOneTile('up');
