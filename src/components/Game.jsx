@@ -73,7 +73,10 @@ class Game extends React.Component {
 //Move player on keypress
     window.onkeydown = (event) => {
       if (event.key === "ArrowRight") {
-        let newTile = Object.assign({player: false}, this.state.playerTile);
+        let newTile = Object.assign({}, this.state.playerTile);
+        newTile.player = false;
+        console.log("does newTile player = true?");
+        console.log(newTile.player);
         let tileToRight = findTileFromCurrentTile('right', newTile);
         tileToRight.player = true;
         // console.log("Current tile and tile to right:");
@@ -107,7 +110,7 @@ class Game extends React.Component {
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
-            return <Tile spritePath={tile.spritePath} x={tile.x} y={tile.y} id={tile.id} key={tile.id} />;
+            return <Tile tileObj={tile} key={tile.id} />;
           })}
 
           </div>
