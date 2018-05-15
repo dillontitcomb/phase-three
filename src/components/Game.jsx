@@ -10,6 +10,8 @@ class Game extends React.Component {
     super(props)
     this.state = {
       gameBoard: [],
+      layerTwo: [],
+      layerThree: [],
       allTiles: [],
       playerTile: {}
     }
@@ -19,9 +21,12 @@ class Game extends React.Component {
 
   componentWillMount() {
     let gameGrid;
+    let layerTwo;
+    let layerThree;
     let tiles;
     let player;
     const createGrid = (width, height) => {
+      layerTwo = [];
       gameGrid = [];
       tiles = [];
       for (let i=0; i<height; i++) {
@@ -91,6 +96,13 @@ class Game extends React.Component {
       new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
       new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
       this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: adjacentTile})
+    }
+
+//Switch to second grid view
+    const changeGrid = (gridTemplate) => {
+      for (let i=0; i<this.state.gameBoard.length; i++) {
+
+      }
     }
 
 //Move player on keypress
