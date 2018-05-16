@@ -149,7 +149,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerTwoGrid: currentBoard, layerTwoTiles: currentTiles, lastActiveBoard: 'one', playerTile: newCurrentPlayerTile})
           } else if (this.state.lastActiveBoard === 'three') {
@@ -171,7 +171,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerThreeGrid: currentBoard, layerThreeTiles: currentTiles, lastActiveBoard: 'one', playerTile: newCurrentPlayerTile})
             //If previous board was layer one
@@ -199,7 +199,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, gameBoard: currentBoard, allTiles: currentTiles, lastActiveBoard: 'two', playerTile: newCurrentPlayerTile})
           } else if (this.state.lastActiveBoard === 'three') {
@@ -221,7 +221,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerThreeGrid: currentBoard, layerThreeTiles: currentTiles, lastActiveBoard: 'two', playerTile: newCurrentPlayerTile})
           }
@@ -248,7 +248,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, gameBoard: currentBoard, allTiles: currentTiles, lastActiveBoard: 'three', playerTile: newCurrentPlayerTile})
           } else if (this.state.lastActiveBoard === 'two') {
@@ -270,7 +270,7 @@ class Game extends React.Component {
             //& for tiles
             newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
             //Create new playerTile with tile from current board
-            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.x];
             //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
             this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerTwoGrid: currentBoard, layerTwoTiles: currentTiles, lastActiveBoard: 'three', playerTile: newCurrentPlayerTile})
           }
