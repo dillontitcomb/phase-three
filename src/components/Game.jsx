@@ -32,6 +32,7 @@ class Game extends React.Component {
     let layerTwoTiles;
     let layerThreeGrid;
     let layerThreeTiles;
+
     const createGrid = (width, height) => {
       gameGrid = [];
       tiles = [];
