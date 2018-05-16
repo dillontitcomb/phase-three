@@ -124,34 +124,159 @@ class Game extends React.Component {
       this.setState({currentGameBoard: new2dArray, currentAllTiles: new1dArray, playerTile: adjacentTile})
     }
 
-//Switch to second grid view
-    // const changeGridLayers = (layer) => {
-    //   switch(layer) {
-    //     case 'one':
-    //       if (this.state.lastActiveBoard === 'one') {
-    //         //Do nothing
-    //       } else {
-    //         let newBoard = Object.assign({}, this.state.gameGrid);
-    //         newBoard
-    //         this.setState({currentGameBoard: newBoard, lastActiveBoard: 'one', playerTile: })
-    //       }
-    //       break;
-    //     case 'two':
-    //       if (this.state.lastActiveBoard === 'two') {
-    //         //Do nothing
-    //       } else {
-    //
-    //       }
-    //       break;
-    //     case 'three':
-    //       if (this.state.lastActiveBoard === 'one') {
-    //         //Do nothing
-    //       } else {
-    //
-    //       }
-    //       break;
-    //   }
-    // }
+// Switch to second grid view
+    const changeGridLayers = (layer) => {
+      switch(layer) {
+        case 'one':
+          if (this.state.lastActiveBoard === 'one') {
+            //Do nothing
+          } else if (this.state.lastActiveBoard === 'two'){
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.gameBoard);
+            let newTiles = Object.assign({}, this.state.allTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerTwoGrid: currentBoard, layerTwoTiles: currentTiles, lastActiveBoard: 'one', playerTile: newCurrentPlayerTile})
+          } else if (this.state.lastActiveBoard === 'three') {
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.gameBoard);
+            let newTiles = Object.assign({}, this.state.allTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerThreeGrid: currentBoard, layerThreeTiles: currentTiles, lastActiveBoard: 'one', playerTile: newCurrentPlayerTile})
+            //If previous board was layer one
+          }
+          break;
+        case 'two':
+          if (this.state.lastActiveBoard === 'two') {
+            //Do nothing
+          } else if (this.state.lastActiveBoard === 'one'){
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.layerTwoGrid);
+            let newTiles = Object.assign({}, this.state.layerTwoTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, gameBoard: currentBoard, allTiles: currentTiles, lastActiveBoard: 'two', playerTile: newCurrentPlayerTile})
+          } else if (this.state.lastActiveBoard === 'three') {
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.layerTwoGrid);
+            let newTiles = Object.assign({}, this.state.layerTwoTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerThreeGrid: currentBoard, layerThreeTiles: currentTiles, lastActiveBoard: 'two', playerTile: newCurrentPlayerTile})
+          }
+          break;
+        case 'three':
+          if (this.state.lastActiveBoard === 'three') {
+            //Do nothing
+          } else if (this.state.lastActiveBoard === 'one'){
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.layerThreeGrid);
+            let newTiles = Object.assign({}, this.state.layerThreeTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, gameBoard: currentBoard, allTiles: currentTiles, lastActiveBoard: 'three', playerTile: newCurrentPlayerTile})
+          } else if (this.state.lastActiveBoard === 'two') {
+            //IF PREVIOUS BOARD WAS BOARD TWO, DO:
+            //Create stand-in objects for currentBoard, currentTiles, newBoard, newTiles, currentPlayer
+            let currentBoard = Object.assign({}, this.state.currentGameBoard);
+            let currentTiles = Object.assign({}, this.state.currentAllTiles);
+            let newBoard = Object.assign({}, this.state.layerThreeGrid);
+            let newTiles = Object.assign({}, this.state.layerThreeTiles);
+            let currentPlayerTile = Object.assign({}, this.state.playerTile);
+            //Import board data from new board, board one
+            //& for tiles
+            //Remove player tile data from previous board, board two
+            currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
+            //& for tiles
+            currentTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = false;
+            //Add player position to new board
+            newBoard[currentPlayerTile.y][currentPlayerTile.x].player = true;
+            //& for tiles
+            newTiles[getOneDimensionalArrayPosition(currentPlayerTile, d.gridWidth)].player = true;
+            //Create new playerTile with tile from current board
+            let newCurrentPlayerTile = newBoard[currentPlayerTile.y][currentPlayerTile.y];
+            //Save newBoard to currentGameBoard (+ tiles), currentPlayerTile to playerTile, currentBoard to layerTwoGrid (+ tiles)
+            this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles, layerTwoGrid: currentBoard, layerTwoTiles: currentTiles, lastActiveBoard: 'three', playerTile: newCurrentPlayerTile})
+          }
+          break;
+      }
+    }
 
 //Move player on keypress
     window.onkeydown = function(event){
@@ -168,6 +293,15 @@ class Game extends React.Component {
           break;
         case 'ArrowLeft':
           movePlayerOneTile('left');
+          break;
+        case '1':
+          changeGridLayers('one');
+          break;
+        case '2':
+          changeGridLayers('two');
+          break;
+        case '3':
+          changeGridLayers('three');
           break;
         default:
           //do nothing
