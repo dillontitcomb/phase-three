@@ -5,6 +5,8 @@ function Tile(props){
   let newClassName;
   if (props.tileObj.player === true) {
     newClassName = 'player';
+  } else if (props.tileObj.enemy === true){
+    newClassName = 'enemy';
   } else if (props.tileObj.walkable === false){
     newClassName = 'obstacle';
   } else if (props.tileObj.spritePath === 'ground') {
@@ -32,6 +34,9 @@ function Tile(props){
       }
       .obstacle {
         background-color: black;
+      }
+      .enemy {
+        background-color: cornflowerblue;
       }
 			`}</style>
     </div>

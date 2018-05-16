@@ -33,7 +33,7 @@ class Game extends React.Component {
     let layerThreeGrid;
     let layerThreeTiles;
 
-    const createGrid = (width, height) => {
+    const createGrid = (width, height, levelBlueprint) => {
       gameGrid = [];
       tiles = [];
       layerTwoGrid = [];
@@ -56,20 +56,38 @@ class Game extends React.Component {
             playerDirection: 'down',
             enemyDirection: 'down'
           }
-          gridRow.push(newTile);
-          tiles.push(newTile);
-          let layerTwoTile = Object.assign({}, newTile);
-          if (layerTwoTile.id % 4 === 0) {
-            layerTwoTile.walkable = false;
-          }
-          layerTwoGridRow.push(layerTwoTile);
-          layerTwoTiles.push(layerTwoTile);
-          let layerThreeTile = Object.assign({}, newTile);
-          if (layerThreeTile.id % 7 === 0) {
-            layerThreeTile.walkable = false;
-          }
-          layerThreeGridRow.push(layerThreeTile);
-          layerThreeTiles.push(layerThreeTile);
+        let layerTwoTile = Object.assign({}, newTile);
+        let layerThreeTile = Object.assign({}, newTile);
+        switch(levelBlueprint[0][(i * width) + j]) {
+          case 0: newTile.walkable = false
+          break;
+          case 1: newTile.spritePath = 'ground'
+          break;
+          case 2: newTile.spritePath = 'ground'
+          break;
+        }
+        switch(levelBlueprint[1][(i * width) + j]) {
+          case 0: layerTwoTile.walkable = false
+          break;
+          case 1: layerTwoTile.spritePath = 'ground'
+          break;
+          case 2: layerTwoTile.spritePath = 'ground'
+          break;
+        }
+        switch(levelBlueprint[2][(i * width) + j]) {
+          case 0: layerThreeTile.walkable = false
+          break;
+          case 1: layerThreeTile.spritePath = 'ground'
+          break;
+          case 2: layerThreeTile.spritePath = 'ground'
+          break;
+        }
+        gridRow.push(newTile);
+        tiles.push(newTile);
+        layerTwoGridRow.push(layerTwoTile);
+        layerTwoTiles.push(layerTwoTile);
+        layerThreeGridRow.push(layerThreeTile);
+        layerThreeTiles.push(layerThreeTile);
         }
         gameGrid.push(gridRow);
         layerTwoGrid.push(layerTwoGridRow);
@@ -78,7 +96,7 @@ class Game extends React.Component {
         player = gameGrid[0][0];
       }
     }
-    createGrid(d.gridWidth, d.gridHeight);
+    createGrid(d.gridWidth, d.gridHeight, d.levelOne);
     this.setState({currentGameBoard: gameGrid, currentAllTiles: tiles, gameBoard: gameGrid, allTiles: tiles, playerTile: player, layerTwoGrid: layerTwoGrid, layerTwoTiles: layerTwoTiles, layerThreeGrid: layerThreeGrid, layerThreeTiles: layerThreeTiles});
   }
 
