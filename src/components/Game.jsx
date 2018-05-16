@@ -11,6 +11,7 @@ class Game extends React.Component {
     this.state = {
       currentGameBoard: [],
       currentAllTiles: [],
+      lastActiveBoard: 'one',
       gameBoard: [],
       allTiles: [],
       layerTwoGrid: [],
@@ -93,16 +94,16 @@ class Game extends React.Component {
       let newTile;
       switch(direction) {
         case 'up':
-          newTile = this.state.gameBoard[currentTile.y-1][currentTile.x];
+          newTile = this.state.currentGameBoard[currentTile.y-1][currentTile.x];
           return newTile;
         case 'right':
-          newTile = this.state.gameBoard[currentTile.y][currentTile.x+1];
+          newTile = this.state.currentGameBoard[currentTile.y][currentTile.x+1];
           return newTile;
         case 'down':
-          newTile = this.state.gameBoard[currentTile.y+1][currentTile.x];
+          newTile = this.state.currentGameBoard[currentTile.y+1][currentTile.x];
           return newTile;
         case 'left':
-          newTile = this.state.gameBoard[currentTile.y][currentTile.x-1];
+          newTile = this.state.currentGameBoard[currentTile.y][currentTile.x-1];
           return newTile;
         default:
           //Do nothing
@@ -114,17 +115,43 @@ class Game extends React.Component {
       newTile.player = false;
       let adjacentTile = Object.assign({}, findTileFromCurrentTile(direction, newTile));
       adjacentTile.player = true;
-      let new2dArray = Object.assign({}, this.state.gameBoard);
-      let new1dArray = Object.assign({}, this.state.allTiles);
+      let new2dArray = Object.assign({}, this.state.currentGameBoard);
+      let new1dArray = Object.assign({}, this.state.currentAllTiles);
       new2dArray[newTile.y][newTile.x] = newTile;
       new2dArray[adjacentTile.y][adjacentTile.x] = adjacentTile;
       new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
       new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
-      this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: adjacentTile})
+      this.setState({currentGameBoard: new2dArray, currentAllTiles: new1dArray, playerTile: adjacentTile})
     }
 
 //Switch to second grid view
-
+    // const changeGridLayers = (layer) => {
+    //   switch(layer) {
+    //     case 'one':
+    //       if (this.state.lastActiveBoard === 'one') {
+    //         //Do nothing
+    //       } else {
+    //         let newBoard = Object.assign({}, this.state.gameGrid);
+    //         newBoard
+    //         this.setState({currentGameBoard: newBoard, lastActiveBoard: 'one', playerTile: })
+    //       }
+    //       break;
+    //     case 'two':
+    //       if (this.state.lastActiveBoard === 'two') {
+    //         //Do nothing
+    //       } else {
+    //
+    //       }
+    //       break;
+    //     case 'three':
+    //       if (this.state.lastActiveBoard === 'one') {
+    //         //Do nothing
+    //       } else {
+    //
+    //       }
+    //       break;
+    //   }
+    // }
 
 //Move player on keypress
     window.onkeydown = function(event){
@@ -153,8 +180,8 @@ class Game extends React.Component {
       return(
         <div className="gameContainer">
           <div className="gridContainer">
-          {Object.keys(this.state.allTiles).map(tileKey => {
-            let tile = this.state.allTiles[tileKey];
+          {Object.keys(this.state.currentAllTiles).map(tileKey => {
+            let tile = this.state.currentAllTiles[tileKey];
             return <Tile tileObj={tile} key={tile.id} />;
           })}
 
