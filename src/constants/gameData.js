@@ -3,17 +3,14 @@ export const gridWidth = 32;
 export const gridHeight = 18;
 export const gridWidthPx = 1280;
 export const gridHeightPx = 720;
+export const tileNumber = gridHeight * gridWidth;
 
-export const levelOne = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,];
-
-generateLevelLayouts = () => {
+const generateLevelLayouts = () => {
   let array = [];
-  for (let i=0; i<576; i++) {
+  for (let i=0; i<tileNumber; i++) {
     array.push(Math.floor(Math.random() * Math.floor(3)));
   }
   return array;
 }
 
-export const levelOneGridOne = generateLevelLayouts();
-export const levelOneGridTwo = generateLevelLayouts();
-export const levelOneGridTwo = generateLevelLayouts();
+export const levelOne = [generateLevelLayouts(), generateLevelLayouts(), generateLevelLayouts()]
