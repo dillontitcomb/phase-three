@@ -112,16 +112,18 @@ class Game extends React.Component {
 //Move player to adjacent tile
     const movePlayerOneTile = (direction) => {
       let newTile = Object.assign({}, this.state.playerTile);
-      newTile.player = false;
       let adjacentTile = Object.assign({}, findTileFromCurrentTile(direction, newTile));
-      adjacentTile.player = true;
-      let new2dArray = Object.assign({}, this.state.currentGameBoard);
-      let new1dArray = Object.assign({}, this.state.currentAllTiles);
-      new2dArray[newTile.y][newTile.x] = newTile;
-      new2dArray[adjacentTile.y][adjacentTile.x] = adjacentTile;
-      new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
-      new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
-      this.setState({currentGameBoard: new2dArray, currentAllTiles: new1dArray, playerTile: adjacentTile})
+      if (adjacentTile.walkable) {
+        newTile.player = false;
+        adjacentTile.player = true;
+        let new2dArray = Object.assign({}, this.state.currentGameBoard);
+        let new1dArray = Object.assign({}, this.state.currentAllTiles);
+        new2dArray[newTile.y][newTile.x] = newTile;
+        new2dArray[adjacentTile.y][adjacentTile.x] = adjacentTile;
+        new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
+        new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
+        this.setState({currentGameBoard: new2dArray, currentAllTiles: new1dArray, playerTile: adjacentTile})
+      }
     }
 
 // Switch to second grid view
