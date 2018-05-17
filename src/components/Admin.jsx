@@ -21,8 +21,26 @@ class Admin extends React.Component {
   }
 
   handleTileClick(tile) {
-    console.log("Tile clicked!");
-    console.log(tile)
+    let newTile = Object.assign({}, tile);
+    if (newTile.player === true) {
+      newTile.player = false;
+      newTile.enemy = true;
+    } else if (newTile.enemy === true) {
+      newTile.enemy = false;
+      newTile.walkable = false;
+    } else if (newTile.walkable === false) {
+      newTile.walkable = true;
+      newTile.spritePath = 'ground';
+    } else if (newTile.spritePath === 'ground') {
+      newTile.spritePath = 'wall';
+    } else {
+      newTile.player = true
+    }
+    let currentBoard = Object.assign({}, this.state.gameBoard);
+    let currentAllTiles = Object.assign({}, this.state.allTiles);
+    currentBoard[newTile.y][newTile.x] = newTile;
+    currentAllTiles[(newTile.y * d.gridWidth) + newTile.x] = newTile;
+    this.setState({gameBoard: currentBoard, allTiles: currentAllTiles});
   }
 
   componentWillMount() {
@@ -128,12 +146,12 @@ class Admin extends React.Component {
   render(){
       return(
         <div className="gameContainer">
+        <h3>White: player, Red: ground, Blue: wall, Purple: enemy, Obstacle: black</h3>
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
             return <Tile clickTile={this.handleTileClick} tileObj={tile} key={tile.id} />;
           })}
-
           </div>
           <style jsx>{`
           .gameContainer {

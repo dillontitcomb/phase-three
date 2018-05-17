@@ -36,7 +36,7 @@ function Tile(props){
         background-color: black;
       }
       .enemy {
-        background-color: cornflowerblue;
+        background-color: purple;
       }
 			`}</style>
     </div>
