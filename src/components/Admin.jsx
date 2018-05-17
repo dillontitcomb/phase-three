@@ -17,11 +17,12 @@ class Admin extends React.Component {
     }
     this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.onTileClick = this.onTileClick.bind(this);
+    this.handleTileClick = this.handleTileClick.bind(this);
   }
 
-  onTileClick(event, tile) {
+  handleTileClick(tile) {
     console.log("Tile clicked!");
+    console.log(tile)
   }
 
   componentWillMount() {
@@ -130,7 +131,7 @@ class Admin extends React.Component {
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
-            return <Tile onClick={this.onTileClick(tile)} tileObj={tile} key={tile.id} />;
+            return <Tile clickTile={this.handleTileClick} tileObj={tile} key={tile.id} />;
           })}
 
           </div>

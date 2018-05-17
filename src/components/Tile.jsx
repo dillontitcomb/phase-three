@@ -15,7 +15,7 @@ function Tile(props){
     newClassName = 'wall';
   }
   return (
-    <div className={newClassName}>
+    <div onClick={() => props.clickTile(props.tileObj)} className={newClassName}>
       <style jsx>{`
       div {
         width: 40px;
@@ -44,6 +44,7 @@ function Tile(props){
 }
 
 Tile.propTypes = {
+  clickTile: PropTypes.func.isRequired,
   tileObj: PropTypes.object.isRequired
 };
 
