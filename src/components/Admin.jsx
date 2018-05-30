@@ -13,11 +13,13 @@ class Admin extends React.Component {
       currentAllTiles: [],
       gameBoard: [],
       allTiles: [],
-      playerTile: {}
+      playerTile: {},
+      createdLevelArray: []
     }
     this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleTileClick = this.handleTileClick.bind(this);
+    // this.setLevelArray = this.setLevelArray.bind(this);
   }
 
   handleTileClick(tile) {
@@ -42,6 +44,13 @@ class Admin extends React.Component {
     currentAllTiles[(newTile.y * d.gridWidth) + newTile.x] = newTile;
     this.setState({gameBoard: currentBoard, allTiles: currentAllTiles});
   }
+
+  // setLevelArray() {
+  //   // let outputArray = [];
+  //   // for(let i=0; i<this.state.allTiles.length; i++) {
+  //   //   if ()
+  //   // }
+  // }
 
   componentWillMount() {
     let gameGrid;
