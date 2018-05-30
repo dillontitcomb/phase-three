@@ -19,7 +19,7 @@ class Admin extends React.Component {
     this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleTileClick = this.handleTileClick.bind(this);
-    // this.setLevelArray = this.setLevelArray.bind(this);
+    this.setLevelArray = this.setLevelArray.bind(this);
   }
 
   handleTileClick(tile) {
@@ -45,12 +45,26 @@ class Admin extends React.Component {
     this.setState({gameBoard: currentBoard, allTiles: currentAllTiles});
   }
 
-  // setLevelArray() {
-  //   // let outputArray = [];
-  //   // for(let i=0; i<this.state.allTiles.length; i++) {
-  //   //   if ()
-  //   // }
-  // }
+  setLevelArray() {
+    let outputArray = [];
+    let currentArray = Object.assign([], this.state.allTiles);
+    for (let i=0; i<currentArray.length; i++) {
+      if (currentArray[i].player === true) {
+        outputArray.push(0);
+      } else if (currentArray[i].enemy === true){
+        outputArray.push(1);
+      } else if (currentArray[i].walkable === false) {
+        outputArray.push(2);
+      } else if (currentArray[i].spritePath === 'ground') {
+        outputArray.push(3);
+      } else if (currentArray[i].spritePath === 'wall') {
+        outputArray.push(4);
+      } else {
+        outputArray.push(-1);
+      }
+    }
+    this.setState({createdLevelArray: outputArray});
+  }
 
   componentWillMount() {
     let gameGrid;
@@ -86,7 +100,6 @@ class Admin extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state);
 
 //Get 1d array position from tile
     const getOneDimensionalArrayPosition = function(currentTile, gridWidth){
@@ -156,6 +169,8 @@ class Admin extends React.Component {
       return(
         <div className="gameContainer">
         <h3>White: player, Red: ground, Blue: wall, Purple: enemy, Obstacle: black</h3>
+        <button onClick={this.setLevelArray} type="button">Create Level Array</button>
+        {(this.state.createdLevelArray.length > 0) ? <div className="level-array-container"><h4>Level Array</h4><h5>{this.state.createdLevelArray.join(", ")}</h5></div> : <span></span>}
           <div className="gridContainer">
           {Object.keys(this.state.allTiles).map(tileKey => {
             let tile = this.state.allTiles[tileKey];
@@ -177,6 +192,24 @@ class Admin extends React.Component {
             display: grid;
             grid-template-columns: repeat(32, 1fr);
             grid-template-rows: repeat(18, 1fr);
+          }
+
+          .level-array-container {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 2px solid black;
+            padding: 5px;
+          }
+
+          h5 {
+            width: 1280px;
+            padding: 0px;
+            margin: 0px;
+          }
+
+          h4 {
+            padding: 0px;
+            margin: 0px;
           }
           `}
           </style>
