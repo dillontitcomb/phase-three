@@ -54,8 +54,11 @@ class Game extends React.Component {
             walkable: true,
             spritePath: 'ground',
             playerDirection: 'down',
-            enemyDirection: 'down'
+            enemyDirection: 'down',
+            goal: false
           }
+        //Set Goal on all boards
+        if (newTile.x === (width-1) && newTile.y === (height-1)) newTile.goal = true;
         let layerTwoTile = Object.assign({}, newTile);
         let layerThreeTile = Object.assign({}, newTile);
         switch(levelBlueprint[0][(i * width) + j]) {
@@ -82,6 +85,8 @@ class Game extends React.Component {
           case 3: layerThreeTile.spritePath = 'ground'
           break;
         }
+        //Set Player on start board
+        if (newTile.x === 0 && newTile.y === 0) newTile.player = true;
         gridRow.push(newTile);
         tiles.push(newTile);
         layerTwoGridRow.push(layerTwoTile);
@@ -92,9 +97,11 @@ class Game extends React.Component {
         gameGrid.push(gridRow);
         layerTwoGrid.push(layerTwoGridRow);
         layerThreeGrid.push(layerThreeGridRow);
-        gameGrid[0][0].player = true;
-        player = gameGrid[0][0];
       }
+      //Set player and goal locations
+      // gameGrid[17][31].goal = true;
+      // gameGrid[0][0].player = true;
+      player = gameGrid[0][0];
     }
     createGrid(d.gridWidth, d.gridHeight, d.levelOne);
     this.setState({currentGameBoard: gameGrid, currentAllTiles: tiles, gameBoard: gameGrid, allTiles: tiles, playerTile: player, layerTwoGrid: layerTwoGrid, layerTwoTiles: layerTwoTiles, layerThreeGrid: layerThreeGrid, layerThreeTiles: layerThreeTiles});

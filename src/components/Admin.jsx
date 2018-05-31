@@ -13,7 +13,6 @@ class Admin extends React.Component {
       currentAllTiles: [],
       gameBoard: [],
       allTiles: [],
-      playerTile: {},
       createdLevelArray: []
     }
     this.componentWillMount = this.componentWillMount.bind(this);
@@ -24,20 +23,24 @@ class Admin extends React.Component {
 
   handleTileClick(tile) {
     let newTile = Object.assign({}, tile);
-    if (newTile.player === true) {
+    if (newTile.spritePath === 'ground'){
+      newTile.spritePath = '';
       newTile.walkable = false;
-      newTile.player = false;
     } else if (newTile.walkable === false) {
-      newTile.enemy = true;
+      newTile.spritePath = 'wall';
       newTile.walkable = true;
+    } else if (newTile.spritePath === 'wall') {
+      newTile.spritePath = '';
+      newTile.enemy = true;
     } else if (newTile.enemy === true) {
       newTile.enemy = false;
-      newTile.spritePath = 'wall';
-    } else if (newTile.spritePath === 'wall') {
-      newTile.spritePath = 'ground';
-    } else if (newTile.spritePath === 'ground'){
-      newTile.spritePath = '';
       newTile.player = true;
+    } else if (newTile.player === true) {
+      newTile.player = false;
+      newTile.goal = true;
+    } else if (newTile.goal === true){
+      newTile.goal = false;
+      newTile.spritePath = 'ground';
     }
     let currentBoard = Object.assign({}, this.state.gameBoard);
     let currentAllTiles = Object.assign({}, this.state.allTiles);
@@ -70,7 +73,6 @@ class Admin extends React.Component {
   componentWillMount() {
     let gameGrid;
     let tiles;
-    let player;
     const createGrid = (width, height, levelBlueprint) => {
       gameGrid = [];
       tiles = [];
@@ -86,84 +88,20 @@ class Admin extends React.Component {
             walkable: true,
             spritePath: 'ground',
             playerDirection: 'down',
-            enemyDirection: 'down'
+            enemyDirection: 'down',
+            goal: false
           }
         gridRow.push(newTile);
         tiles.push(newTile);
         }
         gameGrid.push(gridRow);
-        gameGrid[0][0].player = true;
-        player = gameGrid[0][0];
       }
     }
     createGrid(d.gridWidth, d.gridHeight, d.levelOne);
-    this.setState({gameBoard: gameGrid, allTiles: tiles, playerTile: player});
+    this.setState({gameBoard: gameGrid, allTiles: tiles});
   }
 
   componentDidMount() {
-
-//Get 1d array position from tile
-    const getOneDimensionalArrayPosition = function(currentTile, gridWidth){
-      let output = ((currentTile.y * gridWidth) + currentTile.x);
-      return output;
-    }
-//Get tile adjacent to current tile by direction
-    const findTileFromCurrentTile = (direction, currentTile) => {
-      let newTile;
-      switch(direction) {
-        case 'up':
-          newTile = this.state.gameBoard[currentTile.y-1][currentTile.x];
-          return newTile;
-        case 'right':
-          newTile = this.state.gameBoard[currentTile.y][currentTile.x+1];
-          return newTile;
-        case 'down':
-          newTile = this.state.gameBoard[currentTile.y+1][currentTile.x];
-          return newTile;
-        case 'left':
-          newTile = this.state.gameBoard[currentTile.y][currentTile.x-1];
-          return newTile;
-        default:
-          //Do nothing
-      }
-    }
-//Move player to adjacent tile
-    const movePlayerOneTile = (direction) => {
-      let newTile = Object.assign({}, this.state.playerTile);
-      let adjacentTile = Object.assign({}, findTileFromCurrentTile(direction, newTile));
-      if (adjacentTile.walkable) {
-        newTile.player = false;
-        adjacentTile.player = true;
-        let new2dArray = Object.assign({}, this.state.gameBoard);
-        let new1dArray = Object.assign({}, this.state.allTiles);
-        new2dArray[newTile.y][newTile.x] = newTile;
-        new2dArray[adjacentTile.y][adjacentTile.x] = adjacentTile;
-        new1dArray[getOneDimensionalArrayPosition(newTile, d.gridWidth)] = newTile;
-        new1dArray[getOneDimensionalArrayPosition(adjacentTile, d.gridWidth)] = adjacentTile;
-        this.setState({gameBoard: new2dArray, allTiles: new1dArray, playerTile: adjacentTile})
-      }
-    }
-
-//Move player on keypress
-    window.onkeydown = function(event){
-      event.preventDefault();
-      switch(event.key) {
-        case 'ArrowUp':
-          movePlayerOneTile('up');
-          break;
-        case 'ArrowRight':
-          movePlayerOneTile('right');
-          break;
-        case 'ArrowDown':
-          movePlayerOneTile('down');
-          break;
-        case 'ArrowLeft':
-          movePlayerOneTile('left');
-          break;
-        default:
-          //do nothing
-      }
-    }
   }
 
   render(){

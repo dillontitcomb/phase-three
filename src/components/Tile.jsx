@@ -5,6 +5,8 @@ function Tile(props){
   let newClassName;
   if (props.tileObj.player === true) {
     newClassName = 'player';
+  } else if (props.tileObj.goal === true){
+    newClassName = 'goal';
   } else if (props.tileObj.enemy === true){
     newClassName = 'enemy';
   } else if (props.tileObj.walkable === false){
@@ -37,6 +39,9 @@ function Tile(props){
       }
       .enemy {
         background-color: purple;
+      }
+      .goal {
+        background-color: yellow;
       }
 			`}</style>
     </div>
