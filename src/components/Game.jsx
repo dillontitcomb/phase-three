@@ -59,27 +59,27 @@ class Game extends React.Component {
         let layerTwoTile = Object.assign({}, newTile);
         let layerThreeTile = Object.assign({}, newTile);
         switch(levelBlueprint[0][(i * width) + j]) {
-          case 0: newTile.walkable = false
+          case 2: newTile.walkable = false
           break;
           case 1: newTile.spritePath = 'ground'
           break;
-          case 2: newTile.spritePath = 'ground'
+          case 3: newTile.spritePath = 'ground'
           break;
         }
         switch(levelBlueprint[1][(i * width) + j]) {
-          case 0: layerTwoTile.walkable = false
+          case 2: layerTwoTile.walkable = false
           break;
           case 1: layerTwoTile.spritePath = 'ground'
           break;
-          case 2: layerTwoTile.spritePath = 'ground'
+          case 3: layerTwoTile.spritePath = 'ground'
           break;
         }
         switch(levelBlueprint[2][(i * width) + j]) {
-          case 0: layerThreeTile.walkable = false
+          case 2: layerThreeTile.walkable = false
           break;
           case 1: layerThreeTile.spritePath = 'ground'
           break;
-          case 2: layerThreeTile.spritePath = 'ground'
+          case 3: layerThreeTile.spritePath = 'ground'
           break;
         }
         gridRow.push(newTile);

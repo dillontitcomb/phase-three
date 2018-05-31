@@ -25,18 +25,19 @@ class Admin extends React.Component {
   handleTileClick(tile) {
     let newTile = Object.assign({}, tile);
     if (newTile.player === true) {
+      newTile.walkable= false;
       newTile.player = false;
+    } else if (newTile.walkable === false) {
       newTile.enemy = true;
+      newTile.walkable = true;
     } else if (newTile.enemy === true) {
       newTile.enemy = false;
-      newTile.walkable = false;
-    } else if (newTile.walkable === false) {
-      newTile.walkable = true;
-      newTile.spritePath = 'ground';
-    } else if (newTile.spritePath === 'ground') {
       newTile.spritePath = 'wall';
-    } else {
-      newTile.player = true
+    } else if (newTile.spritePath === 'wall') {
+      newTile.spritePath = 'ground';
+    } else if (newTile.spritePath === 'ground'){
+      newTile.spritePath = '';
+      newTile.player = true;
     }
     let currentBoard = Object.assign({}, this.state.gameBoard);
     let currentAllTiles = Object.assign({}, this.state.allTiles);
@@ -168,7 +169,7 @@ class Admin extends React.Component {
   render(){
       return(
         <div className="gameContainer">
-        <h3>White: player, Red: ground, Blue: wall, Purple: enemy, Obstacle: black</h3>
+        <h4 id="colors"><span id="white">White:</span> player, <span id="red">Red:</span> ground, <span id="blue">Blue:</span> wall, <span id="purple">Purple:</span> enemy, <span id="black">Black:</span> obstacle</h4>
         <button onClick={this.setLevelArray} type="button">Create Level Array</button>
         {(this.state.createdLevelArray.length > 0) ? <div className="level-array-container"><h4>Level Array</h4><h5>{this.state.createdLevelArray.join(", ")}</h5></div> : <span></span>}
           <div className="gridContainer">
@@ -180,7 +181,7 @@ class Admin extends React.Component {
           <style jsx>{`
           .gameContainer {
             width: 1300px;
-            height: 740px;
+            height: 900px;
             margin: 0 auto;
           }
 
@@ -200,16 +201,46 @@ class Admin extends React.Component {
             border: 2px solid black;
             padding: 5px;
           }
-
           h5 {
             width: 1280px;
             padding: 0px;
             margin: 0px;
           }
-
           h4 {
-            padding: 0px;
             margin: 0px;
+            padding: 0px;
+          }
+          #colors {
+            display: inline;
+            text-align: center;
+            max-width: 490px;
+            background-color: lightgray;
+            padding: 5px;
+            margin: 0px;
+          }
+          #white {
+            color: white;
+          }
+          #red {
+            color: red;
+          }
+          #blue {
+            color: blue;
+          }
+          #purple {
+            color: purple;
+          }
+          #black {
+            color: black;
+          }
+          button {
+            width: 120px;
+            height: 40px;
+            background-color: red;
+            color: white;
+            display: inline;
+            margin-bottom: 10px;
+            margin-left: 10px;
           }
           `}
           </style>
