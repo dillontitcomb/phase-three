@@ -169,8 +169,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.gameBoard);
             let newTiles = Object.assign({}, this.state.allTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
@@ -191,8 +193,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.gameBoard);
             let newTiles = Object.assign({}, this.state.allTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
@@ -219,8 +223,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.layerTwoGrid);
             let newTiles = Object.assign({}, this.state.layerTwoTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
@@ -241,8 +247,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.layerTwoGrid);
             let newTiles = Object.assign({}, this.state.layerTwoTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
@@ -268,8 +276,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.layerThreeGrid);
             let newTiles = Object.assign({}, this.state.layerThreeTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
@@ -290,8 +300,10 @@ class Game extends React.Component {
             let newBoard = Object.assign({}, this.state.layerThreeGrid);
             let newTiles = Object.assign({}, this.state.layerThreeTiles);
             let currentPlayerTile = Object.assign({}, this.state.playerTile);
-            //Import board data from new board, board one
-            //& for tiles
+            //Check if new player tile has obstacle or enemy
+            if ((newBoard[currentPlayerTile.y][currentPlayerTile.x].player) || !(newBoard[currentPlayerTile.y][currentPlayerTile.x].walkable)){
+              this.setState({gameOverStatus: true, gameOverMessage: 'Whoops! YOU DIED.'})
+            }
             //Remove player tile data from previous board, board two
             currentBoard[currentPlayerTile.y][currentPlayerTile.x].player = false;
             //& for tiles
