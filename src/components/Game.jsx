@@ -18,7 +18,9 @@ class Game extends React.Component {
       layerTwoTiles: [],
       layerThreeGrid: [],
       layerThreeTiles: [],
-      playerTile: {}
+      playerTile: {},
+      gameOverStatus: false,
+      gameOverMessage: ''
     }
     this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -139,7 +141,9 @@ class Game extends React.Component {
     const movePlayerOneTile = (direction) => {
       let newTile = Object.assign({}, this.state.playerTile);
       let adjacentTile = Object.assign({}, findTileFromCurrentTile(direction, newTile));
-      if (adjacentTile.walkable) {
+      if (adjacentTile.goal) {
+        this.setState({gameOverStatus: true, gameOverMessage: 'Congratulations, you won!'})
+      } else if (adjacentTile.walkable) {
         newTile.player = false;
         adjacentTile.player = true;
         let new2dArray = Object.assign({}, this.state.currentGameBoard);
@@ -151,7 +155,6 @@ class Game extends React.Component {
         this.setState({currentGameBoard: new2dArray, currentAllTiles: new1dArray, playerTile: adjacentTile})
       }
     }
-
 // Switch to second grid view
     const changeGridLayers = (layer) => {
       switch(layer) {
@@ -341,13 +344,13 @@ class Game extends React.Component {
   render(){
       return(
         <div className="gameContainer">
+          {(this.state.gameOverStatus)? <h1 id="game-over-popup">{this.state.gameOverMessage}</h1> :
           <div className="gridContainer">
           {Object.keys(this.state.currentAllTiles).map(tileKey => {
             let tile = this.state.currentAllTiles[tileKey];
             return <Tile tileObj={tile} key={tile.id} />;
           })}
-
-          </div>
+          </div>}
           <style jsx>{`
           .gameContainer {
             width: 1300px;
