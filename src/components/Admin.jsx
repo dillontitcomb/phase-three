@@ -25,7 +25,7 @@ class Admin extends React.Component {
   handleTileClick(tile) {
     let newTile = Object.assign({}, tile);
     if (newTile.player === true) {
-      newTile.walkable= false;
+      newTile.walkable = false;
       newTile.player = false;
     } else if (newTile.walkable === false) {
       newTile.enemy = true;
