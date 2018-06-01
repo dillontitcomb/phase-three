@@ -24,6 +24,7 @@ class Game extends React.Component {
     }
     this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
   }
 
   componentWillMount() {
@@ -66,7 +67,7 @@ class Game extends React.Component {
         switch(levelBlueprint[0][(i * width) + j]) {
           case 2: newTile.walkable = false
           break;
-          case 1: newTile.spritePath = 'ground'
+          case 1: newTile.enemy = true;
           break;
           case 3: newTile.spritePath = 'ground'
           break;
@@ -74,7 +75,7 @@ class Game extends React.Component {
         switch(levelBlueprint[1][(i * width) + j]) {
           case 2: layerTwoTile.walkable = false
           break;
-          case 1: layerTwoTile.spritePath = 'ground'
+          case 1: newTile.enemy = true;
           break;
           case 3: layerTwoTile.spritePath = 'ground'
           break;
@@ -82,7 +83,7 @@ class Game extends React.Component {
         switch(levelBlueprint[2][(i * width) + j]) {
           case 2: layerThreeTile.walkable = false
           break;
-          case 1: layerThreeTile.spritePath = 'ground'
+          case 1: newTile.enemy = true;
           break;
           case 3: layerThreeTile.spritePath = 'ground'
           break;
@@ -100,9 +101,6 @@ class Game extends React.Component {
         layerTwoGrid.push(layerTwoGridRow);
         layerThreeGrid.push(layerThreeGridRow);
       }
-      //Set player and goal locations
-      // gameGrid[17][31].goal = true;
-      // gameGrid[0][0].player = true;
       player = gameGrid[0][0];
     }
     createGrid(d.gridWidth, d.gridHeight, d.levelOne);
@@ -110,12 +108,19 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state);
 
 //Get 1d array position from tile
-    const getOneDimensionalArrayPosition = function(currentTile, gridWidth){
-      let output = ((currentTile.y * gridWidth) + currentTile.x);
+    const getOneDimensionalArrayPosition = function(currentTile){
+      let output = ((currentTile.y * d.gridWidth) + currentTile.x);
       return output;
+    }
+
+//Get 2d array position from 1d position where outputArray[0] is x, [1] is y
+    const getTwoDimensionalArrayPosition = function(oneDimensionalPosition) {
+      let outputArray = [];
+      outputArray.push(oneDimensionalPosition % d.gridWidth);
+      outputArray.push(Math.floor(oneDimensionalPosition / d.gridWidth));
+      return outputArray;
     }
 //Get tile adjacent to current tile by direction
     const findTileFromCurrentTile = (direction, currentTile) => {
@@ -136,6 +141,56 @@ class Game extends React.Component {
         default:
           //Do nothing
       }
+    }
+    //Find all enemies
+    const findEnemies = () => {
+      let tiles = Object.assign([], this.state.currentAllTiles);
+      let enemyArray = [];
+      for(let i=0; i<tiles.length; i++) {
+        if (tiles[i].enemy) enemyArray.push(tiles[i])
+      }
+      return enemyArray;
+    }
+
+    //Move enemy randomly (0,1,2,3 correspond to up, right, down, left)
+    const moveEnemyRandomly = (enemyTile) => {
+      let adjacentTile;
+      let directionValue = Math.floor(Math.random() * Math.floor(4))
+      // switch (directionValue) {
+      //   case 0:
+      //     adjacentTile = findTileFromCurrentTile('up', enemyTile);
+      //     break;
+      //   case 1:
+      //     adjacentTile = findTileFromCurrentTile('right', enemyTile);
+      //     break;
+      //   case 2:
+      //     adjacentTile = findTileFromCurrentTile('down', enemyTile);
+      //     break;
+      //   case 3:
+      //     adjacentTile = findTileFromCurrentTile('left', enemyTile);
+      //     break;
+      // }
+      if (adjacentTile.player) {
+        this.setState({gameOverStatus: true, gameOverMessage: 'You fell into the hands of the enemy!'});
+      } else if ((adjacentTile.enemy) || !(adjacentTile.walkable)) {
+        //do nothing
+      } else {
+        //Change enemy position and reset state with new board
+        let newBoard = Object.assign([], this.state.currentGameBoard);
+        let newTiles = Object.assign([], this.state.currentAllTiles);
+        newBoard[enemyTile.y][enemyTile.x].enemy = false;
+        newTiles[getOneDimensionalArrayPosition(enemyTile)].enemy = false;
+        newBoard[adjacentTile.y][adjacentTile.x].enemy = true;
+        newTiles[getOneDimensionalEnemyPosition(adjacentTile)].enemy = true;
+        this.setState({currentGameBoard: newBoard, currentAllTiles: newTiles});
+      }
+    }
+    //Enemy movement
+    const animateEnemy = () => {
+      let enemies = findEnemies();
+      enemies.forEach(function(enemy) {
+        moveEnemyRandomly(enemy);
+      })
     }
 //Move player to adjacent tile
     const movePlayerOneTile = (direction) => {
@@ -350,6 +405,15 @@ class Game extends React.Component {
           //do nothing
       }
     }
+    //Animate enemy and object movements
+    const animate = () => {
+      animateEnemy();
+    }
+
+    let interval = setInterval(animate, 500);
+  }
+  componentWillUnmount() {
+    clearInterval(interval);
   }
 
 
